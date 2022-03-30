@@ -1,26 +1,23 @@
 package main
 
 import (
-	"crypto/rand"
-	"encoding/binary"
+	crypto_rand "crypto/rand"
 	"math"
 	"math/big"
+	math_rand "math/rand"
 )
 
 const maxIntFloat = float64(math.MaxInt64)
 
-func randFloat64() (r float64, err error) {
-	n, err := rand.Int(rand.Reader, big.NewInt(math.MaxInt64))
+func init() {
+	seed, err := crypto_rand.Int(crypto_rand.Reader, big.NewInt(1048576))
 	if err != nil {
-		return
+		panic(err)
 	}
-
-	r = float64(n.Int64()) / maxIntFloat
-	return
+	math_rand.Seed(seed.Int64())
 }
 
-func Float64frombytes(bytes []byte) float64 {
-	bits := binary.LittleEndian.Uint64(bytes)
-	float := float64(bits) / maxIntFloat / 2
-	return float
+func randFloat64() (r float64, err error) {
+	r = math_rand.Float64()
+	return
 }
