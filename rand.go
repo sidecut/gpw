@@ -21,6 +21,6 @@ func randFloat64() (r float64, err error) {
 
 func Float64frombytes(bytes []byte) float64 {
 	bits := binary.LittleEndian.Uint64(bytes)
-	float := float64(bits) / maxIntFloat
+	float := float64(bits) / maxIntFloat / 2
 	return float
 }

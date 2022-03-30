@@ -31,16 +31,20 @@ func TestRandFloat64(t *testing.T) {
 }
 
 func TestRandRange(t *testing.T) {
-	var low, high float64
+	var low, high, sum float64
+	var count int
 	low = 1
 	high = 0
 
 	quick.Check(func() bool {
+		count++
 		result, err := randFloat64()
 		if err != nil {
 			t.Error(err)
 			return false
 		}
+		sum += result
+		t.Log(result)
 
 		if result < 0 {
 			t.Errorf("Value %v < 0", result)
@@ -62,11 +66,17 @@ func TestRandRange(t *testing.T) {
 		return true
 	}, nil)
 
-	if low > .01 {
+	if low > .1 {
 		t.Fatalf("Low value %v is too high", low)
 	}
-	if high < 0.99 {
+	if high < 0.9 {
 		t.Fatalf("High value %v is too low", high)
+	}
+
+	avg := sum / float64(count)
+	t.Logf("Average is %v", avg)
+	if avg < .45 || avg > .55 {
+		t.Fatalf("Average %v is out of range", avg)
 	}
 }
 
