@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"testing"
 	"testing/quick"
 )
@@ -77,20 +76,5 @@ func TestRandRange(t *testing.T) {
 	t.Logf("Average is %v", avg)
 	if avg < .45 || avg > .55 {
 		t.Fatalf("Average %v is out of range", avg)
-	}
-}
-
-// func TestRand(t *testing.T) {
-// 	c := 10
-// 	b := make([]byte, c)
-// 	_, err := rand.Read(b)
-// 	CheckError(err)
-
-// 	fmt.Println(b) // [193 174 178 8 109 249 203 255 176 153]
-// }
-
-func CheckError(e error) {
-	if e != nil {
-		fmt.Println(e)
 	}
 }
