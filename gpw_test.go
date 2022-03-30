@@ -13,6 +13,7 @@ func TestGpw(t *testing.T) {
 			t.Error(err)
 			return false
 		}
+		t.Log(pwd)
 
 		if len(pwd) != pwl {
 			t.Errorf("Password %v is the wrong length %v", pwd, len(pwd))
@@ -20,5 +21,5 @@ func TestGpw(t *testing.T) {
 		}
 
 		return true
-	}, &quick.Config{MaxCountScale: 10000})
+	}, &quick.Config{MaxCountScale: 100000})
 }
