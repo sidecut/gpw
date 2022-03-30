@@ -6,16 +6,21 @@ import (
 	"math"
 )
 
-func randFloat64() (float64, error) {
-	b := make([]byte, 8)
-	if _, err := rand.Read(b); err != nil {
-		return 0, err
+const maxIntFloat = float64(math.MaxInt64)
+
+func randFloat64() (r float64, err error) {
+	var b [8]byte
+	_, err = rand.Read(b[:])
+	if err != nil {
+		return
 	}
-	return Float64frombytes(b), nil
+	r = Float64frombytes(b[:])
+	return
+
 }
 
 func Float64frombytes(bytes []byte) float64 {
 	bits := binary.LittleEndian.Uint64(bytes)
-	float := math.Float64frombits(bits)
+	float := float64(bits) / maxIntFloat
 	return float
 }
