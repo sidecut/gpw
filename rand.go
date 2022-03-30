@@ -4,19 +4,19 @@ import (
 	"crypto/rand"
 	"encoding/binary"
 	"math"
+	"math/big"
 )
 
 const maxIntFloat = float64(math.MaxInt64)
 
 func randFloat64() (r float64, err error) {
-	var b [8]byte
-	_, err = rand.Read(b[:])
+	n, err := rand.Int(rand.Reader, big.NewInt(math.MaxInt64))
 	if err != nil {
 		return
 	}
-	r = Float64frombytes(b[:])
-	return
 
+	r = float64(n.Int64()) / maxIntFloat
+	return
 }
 
 func Float64frombytes(bytes []byte) float64 {
