@@ -20,5 +20,5 @@ func TestGpw(t *testing.T) {
 		}
 
 		return true
-	}, nil)
+	}, &quick.Config{MaxCountScale: 10000})
 }
