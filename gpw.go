@@ -1,7 +1,6 @@
 package main
 
 import (
-	"math/rand"
 	"strings"
 )
 
@@ -43,11 +42,12 @@ import (
  * var pw = GPW.pronounceable(10);
  */
 
-func pronounceable(pwl int) string {
-	var output = ""
-
+func pronounceable(pwl int) (output string, err error) {
 	// Pick a random starting point.
-	pik := rand.Float32() // random number [0,1]
+	pik, err := randFloat64() // random number [0,1]
+	if err != nil {
+		return
+	}
 	ranno := int(pik * 125729.0)
 	sum := 0
 	for c1 := 0; c1 < 26; c1++ {
@@ -79,8 +79,11 @@ func pronounceable(pwl int) string {
 			break // exit while loop
 		}
 		//pik = ran.nextDouble();
-		pik = rand.Float32()
-		ranno := pik * float32(sum)
+		pik, err = randFloat64()
+		if err != nil {
+			return
+		}
+		ranno := pik * float64(sum)
 		sum = 0
 		for c3 := 0; c3 < 26; c3++ {
 			sum += _trigram[c1][c2][c3]
@@ -92,5 +95,5 @@ func pronounceable(pwl int) string {
 		nchar++
 	} // while nchar
 
-	return output
+	return
 } // pronounceable
