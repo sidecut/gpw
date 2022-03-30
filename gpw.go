@@ -1,6 +1,8 @@
 package main
 
 import (
+	"errors"
+	"fmt"
 	"strings"
 )
 
@@ -43,6 +45,23 @@ import (
  */
 
 func pronounceable(pwl int) (output string, err error) {
+	var pwds []string
+	for i := 0; i < 3; i++ {
+		output, err = pronounceableInner(pwl)
+		if err != nil {
+			return
+		}
+		pwds = append(pwds, output)
+		if len(output) == pwl {
+			return
+		}
+	}
+
+	err = errors.New(fmt.Sprintf("Could not generate password of sufficient length %v: %v", pwl, pwds))
+	return
+}
+
+func pronounceableInner(pwl int) (output string, err error) {
 	// Pick a random starting point.
 	pik, err := randFloat64() // random number [0,1]
 	if err != nil {
