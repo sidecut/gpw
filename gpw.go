@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"math/rand"
 	"strings"
 )
 
@@ -63,10 +64,7 @@ func pronounceable(pwl int) (output string, err error) {
 
 func pronounceableInner(pwl int) (output string, err error) {
 	// Pick a random starting point.
-	pik, err := randFloat64() // random number [0,1]
-	if err != nil {
-		return
-	}
+	pik := rand.Float64() // random number [0,1]
 	ranno := int(pik * 125729.0)
 	sum := 0
 	for c1 := 0; c1 < 26; c1++ {
@@ -98,10 +96,7 @@ func pronounceableInner(pwl int) (output string, err error) {
 			break // exit while loop
 		}
 		//pik = ran.nextDouble();
-		pik, err = randFloat64()
-		if err != nil {
-			return
-		}
+		pik = rand.Float64()
 		ranno := pik * float64(sum)
 		sum = 0
 		for c3 := 0; c3 < 26; c3++ {

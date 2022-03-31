@@ -1,24 +1,17 @@
 package main
 
 import (
+	"math/rand"
 	"testing"
 	"testing/quick"
 )
 
 func TestRandFloat64(t *testing.T) {
 	quick.Check(func() bool {
-		result1, err := randFloat64()
-		if err != nil {
-			t.Error(err)
-			return false
-		}
+		result1 := rand.Float64()
 		t.Logf("result1 = %v", result1)
 
-		result2, err := randFloat64()
-		if err != nil {
-			t.Error(err)
-			return false
-		}
+		result2 := rand.Float64()
 		t.Logf("result2 = %v", result2)
 
 		if result1 == result2 {
@@ -37,11 +30,7 @@ func TestRandRange(t *testing.T) {
 
 	quick.Check(func() bool {
 		count++
-		result, err := randFloat64()
-		if err != nil {
-			t.Error(err)
-			return false
-		}
+		result := rand.Float64()
 		sum += result
 		t.Log(result)
 
