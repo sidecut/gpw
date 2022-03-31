@@ -2,22 +2,21 @@ package main
 
 import (
 	crypto_rand "crypto/rand"
+	"encoding/binary"
 	"math"
-	"math/big"
-	math_rand "math/rand"
+	"math/rand"
 )
 
-const maxIntFloat = float64(math.MaxInt64)
-
 func init() {
-	seed, err := crypto_rand.Int(crypto_rand.Reader, big.NewInt(1048576))
+	var b [8]byte
+	_, err := crypto_rand.Read(b[:])
 	if err != nil {
-		panic(err)
+		panic("cannot seed math/rand package with cryptographically secure random number generator")
 	}
-	math_rand.Seed(seed.Int64())
+	rand.Seed(int64(binary.LittleEndian.Uint64(b[:])))
 }
 
 func randFloat64() (r float64, err error) {
-	r = math_rand.Float64()
+	r = rand.Float64()
 	return
 }
